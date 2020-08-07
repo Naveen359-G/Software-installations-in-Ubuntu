@@ -1,0 +1,92 @@
+Install Java:
+check into root
+=> sudo su 
+=> sudo su apt update
+=> sudo apt install openjdk-8-jdk
+
+To check installed version:
+=> java --version 
+
+Step: To add Jenkins repository
+
+=> wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add –
+( when the key is added, the system will return OK, next append the debian package repository address to the servers source lsit)
+
+Step: To add Jenkins repo to the system
+
+=> sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+(When both of these are in place, run UPDATE, so that apt will use the new repository)
+
+Step: To install Jenkins
+
+=> sudo apt update
+(Finally install Jenkins and it's dependencies)
+
+=> sudo apt install Jenkins
+(Now that Jenkins and it's dependencies are in place)
+     Let's start Jenkins server
+
+Step: To verify installation
+
+=> sudo systemctl start Jenkins
+(Since systemctl command doesn't display output, you can use it's status command to verify that Jenkins started successfully)
+
+=> sudo systemctl status Jenkins
+
+Step: Opening the Firewall
+By default, Jenkins runs on port 8080. So, let's open that port using ufw:
+
+=> sudo ufw allow 8080
+(check ufw's status to confirm the new rules)
+
+=> sudo ufw status
+( you will see that traffic is allowed to port 8080 from anywhere)
+
+*If the Firewall is inactive, the following commands will allow openSSH and enable the Firewall:
+
+=> sudo ufw allow openSSH
+=> sudo ufw enable
+(With Jenkins installed and our Firewall configured, we can complete the installation setup)
+
+Step: To setting up Jenkins
+* To set up your installation, visit Jenkins on it's default port, 8080.
+using your server domain name or IP address ( http://<your-server-IP_ or domain:8080 )
+
+-When open in new tab on browser
+it displays the location of the initial password
+
+*In the terminal window, use the 'cat' command to display the password
+=> sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+( Copy that 32-character alphanumeric password from the terminal and paste it into the administration password field, then click CONTINUE)
+*The command 'cat' is used to display anyfile data
+
+-The next screen presents the option of installing SUGGESTED PLUGINS or SELECTING SPECIFIC PLUGINS:
+(We will click the install suggested plugins option, which will immediately begin the installation process: 
+
+-When the installation is complete, you will be prompted to setup the first administration user, it's possible setup to skip this step and
+continue as ADMIN using the initial password we are used above, but we will take a moment to create the user.
+
+=> Enter the name; password; Full name; Email address; --- SAVE & CONTINUE
+
+you will see an instance configuration page that will ask you to confirm the preferred URL for your Jenkins instance.
+confirm either the domain name for your server or your server IP address:   
+
+-After confirming the appropriate information, click SAVE & FINISH, you will see a conformation page. 
+                               Confirming that "Jenkins is Ready"
+
+=> Click “Start using Jenkins” to visit the main Jenkins dashboard.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
