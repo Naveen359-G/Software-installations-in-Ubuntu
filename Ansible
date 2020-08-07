@@ -1,0 +1,59 @@
+* Ansible works by configuring client machines, referred to as managed nodes, from a computer that has the Ansible components installed
+  and configured, which is then called the Ansible control node.
+
+- It communicates over normal SSH channels to retrieve information from remote systems, issue commands, and copy files. Because of this, 
+  an Ansible system does not require any additional software to be installed on the client computers.
+
+- Ansible takes on a modular approach, enabling you to extend the functionalities of the main system to deal with specific scenarios. 
+Modules can be written in any language and communicate in standard JSON.
+
+- Configuration files are mainly written in the YAML data serialization format due to its expressive nature and its similarity to popular 
+  markup languages. Ansible can interact with hosts either through command line tools or its configuration scripts, which are known as Playbooks.
+
+Step: — To Install Ansible:
+
+=> To begin using Ansible as a means of managing your server infrastructure, you need to install the Ansible software on the machine
+  that will serve as the Ansible control node.
+- From your control node, run the following command to include the official project’s PPA (personal package archive) in your system’s list of sources:
+
+=> sudo apt-add-repository ppa:ansible/ansible
+=> sudo apt update
+=> sudo apt upgrade
+
+=> sudo apt install ansible
+
+- Your Ansible control node now has all of the software required to administer your hosts. Next, we will go over how to add your hosts to the 
+  control node’s inventory file so that it can control them.
+
+Step: — Setting Up the Inventory File:
+
+=> sudo nano /etc/ansible/hosts
+
+* Note: some Ansible installations won’t create a default inventory file. If the file doesn’t exist in your system, you can create a new file 
+  at /etc/ansible/hosts or provide a custom inventory path using the -i parameter when running commands and playbooks.
+
+Step: — To check inventory
+
+=> ansible-inventory --list -y
+
+*After setting up the inventory file to include your servers, it’s time to check if Ansible is able to connect to these servers and run commands via SSH. 
+
+Step: — For Testing connections:
+
+From your local machine or Ansible control node, run:
+=> ansible all -m ping -u root
+
+-  For this guide, we will be using the Ubuntu root account because that’s typically the only account available by default on newly created servers. 
+   If your Ansible hosts already have a regular sudo user created, you are encouraged to use that account instead.
+
+- You can use the -u argument to specify the remote system user. When not provided, Ansible will try to connect as your current system user on the control node.
+
+From your local machine or Ansible control node, run:
+- his command will use Ansible’s built-in ping module to run a connectivity test on all nodes from your default inventory, connecting as root. The ping module will test:
+
+    _if hosts are accessible;
+    _if you have valid SSH credentials;
+    _if hosts are able to run Ansible modules using Python.
+
+
+
