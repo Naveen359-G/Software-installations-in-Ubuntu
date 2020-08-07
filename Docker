@@ -1,0 +1,105 @@
+                               
+======================================================================================================================================================================
+                            Docker installation and configure
+                                        PROCESS 1:
+======================================================================================================================================================================
+======================================================================================================================================================================
+Step: To update repository
+First, update your existing list of packages:
+
+=> sudo apt update
+
+      To upgrade repository
+
+=> sudo apt upgrade
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Step: To install Docker
+- The Docker installation package available in the official Ubuntu repository may not be the latest version. To ensure we get the latest version, 
+  we’ll install Docker from the official Docker repository. To do that, we’ll add a new package source, add the GPG key from Docker to ensure the
+  downloads are valid, and then install the package.
+
+- Next, install a few prerequisite packages which let apt use packages over HTTPS:
+
+=> sudo apt install apt-transport-https ca-certificates curl software-properties-common
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Then add the GPG key for the official Docker repository to your system:
+
+=> curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Add the Docker repository to APT sources:
+
+=> sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- Next, update the package database with the Docker packages from the newly added repo:
+
+=> sudo apt update
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-Make sure you are about to install from the Docker repo instead of the default Ubuntu repo:
+
+=> apt-cache policy docker-ce
+(Notice that docker-ce is not installed, but the candidate for installation is from the Docker repository for Ubuntu 18.04 (bionic)). 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Finally, install Docker:
+=> sudo apt install docker-ce
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+-Docker should now be installed, the daemon started, and the process enabled to start on boot. Check that it’s running:
+
+=> sudo systemctl status docker
+======================================================================================================================================================================
+======================================================================================================================================================================
+                                      PROCESS 2
+======================================================================================================================================================================
+** We need to create an account on Docker Hub, if you wish to create your own images and push them to Docker Hub
+======================================================================================================================================================================
+
+Step: To update repository
+
+=> sudo apt update
+=> sudo apt upgrade
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Step: To install Docker
+
+=> sudo apt install docker.io
+[Y/N]    press Y , then enter>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Step: To start the docker
+ => sudo stsyemctl enable --now docker
+ => sudo systemctl disable --now docker
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Step: To check the version of docker
+
+=> docker --version
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Step: To test the docker
+
+=> sudo docker run hello-world
+
+OUTPUT: Hello from Docker!
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+** Docker was initially unable to find the hello-world image locally, so it downloaded the image from Docker Hub, which is the default repository. 
+Once the image downloaded, Docker created a container from the image and the application within the container executed, displaying the message.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+** You can search for images available on Docker Hub by using the docker command with the search subcommand. For example, to search for the Ubuntu image, 
+   type:
+=> docker search ubuntu
+(The script will crawl Docker Hub and return a listing of all images whose name match the search string)
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+** In the OFFICIAL column, OK indicates an image built and supported by the company behind the project. Once you’ve identified the image that you would
+   like to use, you can download it to your computer using the pull subcommand.
+
+- Execute the following command to download the official ubuntu image to your computer:
+ => docker pull ubuntu
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+** After an image has been downloaded, you can then run a container using the downloaded image with the run subcommand. 
+  As you saw with the hello-world example, if an image has not been downloaded when docker is executed with the run subcommand, 
+  the Docker client will first download the image, then run a container using it.
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+- To see the images that have been downloaded to your computer, type:
+
+=> docker images
+
+  The images that you use to run containers can be modified and used to generate new images, which may then be uploaded (pushed is the technical term) 
+  to Docker Hub or other Docker registries.
+======================================================================================================================================================================
+======================================================================================================================================================================
+
